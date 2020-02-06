@@ -274,12 +274,14 @@ int azs_chown(const char * /*path*/, uid_t /*uid*/, gid_t /*gid*/)
     return 0;
 }
 
-int azs_chmod(const char * /*path*/, mode_t /*mode*/)
+int azs_chmod(const char * path, mode_t mode)
 {
-    //TODO: Implement
-//    return -ENOSYS;
-    return 0;
+    AZS_DEBUGLOGV("azs_chmod called with path = %s, mode = %o.\n", path, mode);
 
+    errno = 0;
+    storage_client->ChangeMode(path, mode);
+
+    return errno;
 }
 
 //#ifdef HAVE_UTIMENSAT

@@ -86,6 +86,10 @@ public:
     /// Greedily list all blobs using the input params.
     ///</summary>
     std::vector<std::pair<std::vector<list_hierarchical_item>, bool>> ListAllItemsHierarchical(const std::string& delimiter, const std::string& prefix) override;
+    ///<summary>
+    /// Updates the UNIX-style file mode on a path.
+    ///</summary>
+    int ChangeMode(const char* path, mode_t mode) override;
 
 private:
     ///<summary>

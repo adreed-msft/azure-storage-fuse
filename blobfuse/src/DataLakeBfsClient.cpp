@@ -1,4 +1,5 @@
 #include <fstream>
+#include <include/permissions.h>
 #include "DataLakeBfsClient.h"
 
 ///<summary>
@@ -174,4 +175,15 @@ void DataLakeBfsClient::DownloadToFile(const std::string datalakeFilePath, const
     std::ofstream out_stream(filePath);
     m_adls_client->download_file_to_stream(configurations.containerName, datalakeFilePath, out_stream);
     out_stream.close();
+}
+
+int DataLakeBfsClient::ChangeMode(const char *path, mode_t mode) {
+    // TODO: Once ADLS works in blobfuse, verify that we don't need to get the access
+    microsoft_azure::storage_adls::access_control accessControl;
+    accessControl.acl = modeToString(mode);
+
+    errno = 0;
+    m_adls_client->set_file_access_control(configurations.containerName, path, accessControl);
+
+    return errno;
 }

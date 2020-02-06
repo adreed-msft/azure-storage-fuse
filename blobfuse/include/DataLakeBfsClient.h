@@ -32,6 +32,10 @@ public:
     ///</summary>
     ///<returns>none</returns>
     void DownloadToFile(const std::string datalakeFilePath, const std::string filePath) override;
+    ///<summary>
+    /// Updates the UNIX-style file mode on a path.
+    ///</summary>
+    int ChangeMode(const char* path, mode_t mode) override;
 private:
     ///<summary>
     /// Helper function - Authenticates with an account key

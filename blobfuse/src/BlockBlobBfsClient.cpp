@@ -865,3 +865,7 @@ bool BlockBlobBfsClient::is_folder(const std::vector<std::pair<std::string,std::
     }
     return false;
 }
+
+int BlockBlobBfsClient::ChangeMode(const char*, mode_t) {
+    return -ENOSYS;
+}
