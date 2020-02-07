@@ -47,6 +47,7 @@ struct BfsFileProperty
                 std::string copy_status,
                 std::vector<std::pair<std::string, std::string>> metadata,
                 time_t last_modified,
+                std::string modestring,
                 unsigned long long size) :
                 m_cache_control(cache_control),
                 m_content_disposition(content_disposition),
@@ -59,7 +60,18 @@ struct BfsFileProperty
                 m_metadata(metadata),
                 m_last_modified(last_modified),
                 m_size(size),
-                m_valid(true) {}
+                m_valid(true) {
+        if (!modestring.empty()) {
+            m_file_mode = 0000; // Supply no file mode to begin with unless the mode string is empty
+            for (char & c : modestring) {
+                // Start by pushing back the mode_t.
+                m_file_mode = m_file_mode << 1; // NOLINT(hicpp-signed-bitwise) (mode_t is signed, apparently. Suppress the inspection.)
+                // Then flip the new bit based on whether the mode is enabled or not.
+                // This works because we can expect a consistent 9 character modestring.
+                m_file_mode |= (c != '-');
+            }
+        }
+    }
 
     std::string m_cache_control;
     std::string m_content_disposition;
@@ -71,6 +83,7 @@ struct BfsFileProperty
     std::string m_copy_status;
     std::vector<std::pair<std::string, std::string>> m_metadata;
     time_t m_last_modified;
+    mode_t m_file_mode;
     unsigned long long m_size;
     bool m_valid;
 

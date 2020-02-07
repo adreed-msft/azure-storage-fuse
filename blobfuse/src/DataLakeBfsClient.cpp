@@ -187,3 +187,22 @@ int DataLakeBfsClient::ChangeMode(const char *path, mode_t mode) {
 
     return errno;
 }
+
+BfsFileProperty DataLakeBfsClient::GetProperties(std::string pathName) {
+    auto dfsprops = m_adls_client->get_dfs_path_properties(configurations.containerName, pathName);
+
+    return BfsFileProperty(
+            dfsprops.cache_control,
+            dfsprops.content_disposition,
+            dfsprops.content_encoding,
+            dfsprops.content_language,
+            dfsprops.content_md5,
+            dfsprops.content_type,
+            dfsprops.etag,
+            "",
+            dfsprops.metadata,
+            dfsprops.last_modified,
+            dfsprops.permissions,
+            dfsprops.content_length
+            );
+}

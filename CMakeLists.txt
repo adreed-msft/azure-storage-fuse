@@ -183,7 +183,7 @@ if(UNIX)
 
   set(CMAKE_MACOSX_RPATH ON)
 
-  add_executable(blobfuse ${BLOBFUSE_HEADER} ${BLOBFUSE_SOURCE} ${AZURE_STORAGE_HEADER} ${AZURE_STORAGE_SOURCE} blobfuse/include/permissions.h blobfuse/src/permissions.cpp)
+  add_executable(blobfuse ${BLOBFUSE_HEADER} ${BLOBFUSE_SOURCE} ${AZURE_STORAGE_HEADER} ${AZURE_STORAGE_SOURCE} blobfuse/include/permissions.h blobfuse/src/permissions.cpp azure-storage-cpp-lite/adls/include/get_dfs_properties_request.h azure-storage-cpp-lite/adls/src/get_dfs_properties_request.cpp)
 
   pkg_search_module(UUID REQUIRED uuid)
   target_link_libraries(blobfuse ${CURL_LIBRARIES} ${GNUTLS_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT} ${UUID_LIBRARIES} ${Boost_FILESYSTEM_LIBRARY} ${Boost_SYSTEM_LIBRARY} ${Boost_THREAD_LIBRARY} fuse gcrypt)

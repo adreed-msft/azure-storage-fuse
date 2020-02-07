@@ -133,7 +133,7 @@ int azs_getattr(const char *path, struct stat *stbuf)
 
     int res;
     int acc = access(mntPathString.c_str(), F_OK);
-    if (acc != -1 )
+    if (acc != -1)
     {
         AZS_DEBUGLOGV("Accessing mntPath = %s for get_attr succeeded; object is in the local cache.\n", mntPathString.c_str());
         //(void) fi;
@@ -159,13 +159,14 @@ int azs_getattr(const char *path, struct stat *stbuf)
     std::string blobNameStr(&(path[1]));
     errno = 0;
     BfsFileProperty blob_property = storage_client->GetProperties(blobNameStr);
+    mode_t perms = blob_property.m_file_mode == 0 ? str_options.defaultPermission : blob_property.m_file_mode;
 
     if ((errno == 0) && blob_property.isValid())
     {
         if (is_directory_blob(blob_property.size(), blob_property.m_metadata))
         {
             AZS_DEBUGLOGV("Blob %s, representing a directory, found during get_attr.\n", path);
-            stbuf->st_mode = S_IFDIR | str_options.defaultPermission;
+            stbuf->st_mode = S_IFDIR | perms;
             // If st_nlink = 2, means directory is empty.
             // Directory size will affect behaviour for mv, rmdir, cp etc.
             stbuf->st_uid = fuse_get_context()->uid;
@@ -176,7 +177,7 @@ int azs_getattr(const char *path, struct stat *stbuf)
         }
 
         AZS_DEBUGLOGV("Blob %s, representing a file, found during get_attr.\n", path);
-        stbuf->st_mode = S_IFREG | str_options.defaultPermission; // Regular file (not a directory)
+        stbuf->st_mode = S_IFREG | perms; // Regular file (not a directory)
         stbuf->st_uid = fuse_get_context()->uid;
         stbuf->st_gid = fuse_get_context()->gid;
         stbuf->st_mtime = blob_property.last_modified();

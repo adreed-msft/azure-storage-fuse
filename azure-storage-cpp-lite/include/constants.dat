@@ -107,6 +107,8 @@ DAT(header_ms_group, "x-ms-group")
 DAT(header_ms_permissions, "x-ms-permissions")
 DAT(header_ms_acl, "x-ms-acl")
 DAT(header_ms_rename_source, "x-ms-rename-source")
+DAT(header_ms_resource_type, "x-ms-resource-type")
+DAT(header_ms_properties, "x-ms-properties")
 
 DAT(header_ms_meta_prefix, "x-ms-meta-")
 DAT(header_ms_meta_hdi_isfoler, "x-ms-meta-hdi_isfolder")

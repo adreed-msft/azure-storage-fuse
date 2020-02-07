@@ -36,6 +36,11 @@ public:
     /// Updates the UNIX-style file mode on a path.
     ///</summary>
     int ChangeMode(const char* path, mode_t mode) override;
+    ///<summary>
+    /// Gets the properties of a path
+    ///</summary>
+    ///<returns>BfsFileProperty object which contains the property details of the file</returns>
+    BfsFileProperty GetProperties(std::string pathName) override;
 private:
     ///<summary>
     /// Helper function - Authenticates with an account key

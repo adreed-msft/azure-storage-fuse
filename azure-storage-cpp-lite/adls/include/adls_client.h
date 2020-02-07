@@ -15,6 +15,7 @@
 #include "blob/blob_client.h"
 #include "set_access_control_request.h"
 #include "list_paths_request.h"
+#include "get_dfs_properties_request.h"
 
 namespace microsoft_azure { namespace storage_adls {
     using storage_account = microsoft_azure::storage::storage_account;
@@ -310,6 +311,13 @@ namespace microsoft_azure { namespace storage_adls {
         /// <param name="file">The file path.</param>
         /// <returns>A <see cref="azure::azure_adls::access_control" /> object that represents POSIX access control.</returns>
         AZURE_STORAGE_ADLS_API access_control get_file_access_control(const std::string& filesystem, const std::string& file);
+
+        /// <summary>
+        /// Gets the full properties for a path.
+        /// </summary>
+        /// <param name="filesystem">The filesystem name.</param>
+        /// <param name="path">The path.</param>
+        AZURE_STORAGE_ADLS_API dfs_properties get_dfs_path_properties(const std::string& filesystem, const std::string& path);
 
         /// <summary>
         /// Returns whether exception is enabled for this <see cref="azure::storage_adls::adls_client" />.
